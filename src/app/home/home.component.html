@@ -1,0 +1,64 @@
+<p>Laptops</p>
+
+  <form #formFilter="ngForm" (ngSubmit)="filterData(formFilter)" class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <input
+      ngModel="fieldFilter"
+      type="text"
+      class="form-control"
+      id="fieldFilter"
+      name="fieldFilter"
+      placeholder="Enter Field to filter"
+      required
+    />
+    <input
+      ngModel="operation"
+      type="text"
+      class="form-control"
+      name="operation"
+      id="operation"
+      required
+      placeholder="Enter Operation"
+    />
+    <input
+      ngModel
+      type="text"
+      class="form-control"
+      name="value"
+      ngForm="value"
+      required
+      placeholder="Enter Value"
+    />
+
+  </div>
+  <button id="filter" name="filter" type="submit" [disabled]="!formFilter.valid" class="btn btn-primary mb-2">
+    Find
+  </button>
+</form>
+<div *ngIf="loading">
+  Loading...
+</div>
+<div *ngIf="error">
+  Error Occurred :(
+</div>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Company</th>
+    <th scope="col">price</th>
+    <th scope="col">ram</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lap of laptops ">
+    <th scope="row">{{ lap.id }}</th>
+    <td scope="row">{{ lap.name }}</td>
+    <th scope="row">{{ lap.company }}</th>
+    <td scope="row">{{ lap.price }}</td>
+    <th scope="row">{{ lap.ram }}</th>
+  </tr>
+  </tbody>
+</table>

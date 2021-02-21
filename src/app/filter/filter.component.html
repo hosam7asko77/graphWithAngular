@@ -1,1 +1,62 @@
-<p>filter works!</p>
+<h3>Find Laptop</h3>
+<div class="row">
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="laptopId" class="sr-only">Enter Laptop ID</label>
+      <input
+        [(ngModel)]="laptopId"
+        type="text"
+        class="form-control"
+        name="laptopId"
+        placeholder="Enter Laptop ID"
+      />
+    </div>
+    <button (click)="findLaptopUsingId()" type="submit" class="btn btn-primary mb-2">
+      Find
+    </button>
+  </form>
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="word" class="sr-only">Enter Word to search</label>
+      <input
+        [(ngModel)]="word"
+        type="text"
+        class="form-control"
+        name="word"
+        placeholder="Enter Word to Search"
+      />
+    </div>
+    <button (click)="findLaptop()" type="submit" class="btn btn-primary mb-2">
+      Find
+    </button>
+  </form>
+  <br>
+</div>
+<br/>
+<div *ngIf="loading">
+  Loading...
+</div>
+
+<div>{{ error }}</div>
+
+<hr/>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Company</th>
+    <th scope="col">price</th>
+    <th scope="col">ram</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lap of laptops ">
+    <th scope="row">{{ lap.id }}</th>
+    <td scope="row">{{ lap.name }}</td>
+    <th scope="row">{{ lap.company }}</th>
+    <td scope="row">{{ lap.price }}</td>
+    <th scope="row">{{ lap.ram }}</th>
+  </tr>
+  </tbody>
+</table>

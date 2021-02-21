@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import gql from 'graphql-tag';
 import {Apollo} from 'apollo-angular';
+import {LaptopModel} from '../laptop-model';
+import {LaptopService} from '../laptop-service.service';
+import {NgForm} from '@angular/forms';
+import {FilterField} from '../filter-field';
 
 @Component({
   selector: 'app-home',
@@ -8,40 +12,45 @@ import {Apollo} from 'apollo-angular';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
- books: any[];
+  laptops: LaptopModel[];
   loading = true;
   error: any;
-  constructor(private apollo: Apollo) { }
+
+  constructor(private apollo: Apollo, private service: LaptopService) {
+  }
 
   ngOnInit(): void {
-    this.apollo
-      .query<any>({
-        query: gql`
-          {
-            books {
-              title
-              authors {
-                name
-              }
-            }
-          }
-        `
-      })
-      .subscribe(
-        ({ data, loading }) => {
-          this.books = data && data.books;
-          this.loading = loading;
-        },
-        error => {
-          this.loading = false;
-          this.error = error;
-        }
-      );
+    this.service.findAllLaptops().subscribe(({data, loading}) => {
+        // @ts-ignore
+        this.laptops = data && data.Laptops;
+        this.loading = loading;
+        // @ts-ignore
+        console.log(this.laptops);
+      },
+      error => {
+        this.loading = false;
+        this.error = error;
+      });
   }
-  getAuthorNames(authors): any {
-    if (authors.length > 1) {
-      return authors.reduce((acc, cur) => acc.name + ', ' + cur.name);
+
+  filterData(form: NgForm): void {
+    if (!form.valid) {
+      return;
     }
-    else { return authors[0].name; }
+    const filterField = new FilterField(form.value.operation, form.value.value);
+    const filterF = new FilterField('gt', '2000');
+    const fieldFilter = form.value.fieldFilter;
+    this.service.filterData(filterF).subscribe(({data, loading}) => {
+        // @ts-ignore
+        this.laptops = data && data.FilterLaptops;
+        this.loading = loading;
+        // @ts-ignore
+        console.log(this.laptops);
+      },
+      error => {
+        this.loading = false;
+        this.error = error;
+      });
   }
+
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {FilterComponent} from './filter/filter.component';
 import {HomeComponent} from './home/home.component';
-import {CreateComponent} from "./create/create.component";
+import {CreateComponent} from './create/create.component';
 
 
 
@@ -16,6 +16,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule, CommonModule]
 })
 export class AppRoutingModule { }
