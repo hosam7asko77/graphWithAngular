@@ -4,12 +4,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {FilterComponent} from './filter/filter.component';
 import {HomeComponent} from './home/home.component';
 import {CreateComponent} from './create/create.component';
+import {AuthComponent} from './auth/auth.component';
 
 
 
 const routes: Routes = [
   { path: 'filter', component: FilterComponent },
   { path: 'create', component: CreateComponent },
+  { path: 'login', component: AuthComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];

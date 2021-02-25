@@ -1,1 +1,54 @@
-<p>create works!</p>
+<div *ngIf="error">
+ {{ message }}
+</div>
+<br>
+<div class="text-center">
+  <form #formAdd="ngForm" class="form-signin" (ngSubmit)="onSubmit(formAdd)">
+    <h1 class="h3 mb-3 font-weight-normal">Add new Laptop</h1>
+    <label for="name" class="sr-only">Laptop Name</label>
+    <input
+      id="name"
+      type="text"
+      name="laptopName"
+      class="form-control"
+      placeholder="laptop Name"
+      required
+      autofocus
+      ngModel
+    />
+    <label for="company" class="sr-only">Company</label>
+    <input
+      id="company"
+      type="text"
+      name="company"
+      class="form-control"
+      placeholder="Company"
+      required
+      ngModel
+    />
+        <label for="price" class="sr-only">Price</label>
+        <input
+          id="price"
+      type="number"
+      name="price"
+      class="form-control"
+      placeholder="Price"
+      required
+      autofocus
+      ngModel
+    />
+    <label for="ram" class="sr-only">RAM</label>
+    <input
+      id="ram"
+      type="number"
+      name="ram"
+      class="form-control"
+      placeholder="RAM"
+      required
+      ngModel=""
+    />
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!formAdd.valid">
+      Create Laptop <i class="fa fa-save"></i>
+    </button>
+  </form>
+</div>

@@ -15,21 +15,21 @@
       Find
     </button>
   </form>
-<!--  <form class="form-inline">-->
-<!--    <div class="form-group mx-sm-3 mb-2">-->
-<!--      <label for="word" class="sr-only">Enter Word to search</label>-->
-<!--      <input-->
-<!--        [(ngModel)]="word"-->
-<!--        type="text"-->
-<!--        class="form-control"-->
-<!--        name="word"-->
-<!--        placeholder="Enter Word to Search"-->
-<!--      />-->
-<!--    </div>-->
-<!--    <button (click)="findLaptop()" type="submit" class="btn btn-primary mb-2">-->
-<!--      Find-->
-<!--    </button>-->
-<!--  </form>-->
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="word" class="sr-only">Enter Word to search</label>
+      <input
+        [(ngModel)]="word"
+        type="text"
+        class="form-control"
+        name="word"
+        placeholder="Enter Word to Search"
+      />
+    </div>
+    <button (click)="findLaptop()" type="submit" class="btn btn-primary mb-2">
+      Find
+    </button>
+  </form>
   <br>
 </div>
 <br/>

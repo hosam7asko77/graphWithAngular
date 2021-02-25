@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   laptops: LaptopModel[];
   loading = true;
   error: any;
+  message: string;
 
   constructor(private apollo: Apollo, private service: LaptopService) {
   }
@@ -28,19 +29,40 @@ export class HomeComponent implements OnInit {
         console.log(this.laptops);
       },
       error => {
-        this.loading = false;
-        this.error = error;
+      this.message = this.error.message;
+      this.loading = false;
+      this.error = error;
       });
   }
 
   filterData(form: NgForm): void {
-    if (!form.valid) {
+    if (!form.valid){
+      this.error = 'please enter on search box';
+      console.log(this.error);
       return;
     }
-    const filterField = new FilterField(form.value.operation, form.value.value);
-    const filterF = new FilterField('gt', '2000');
-    const fieldFilter = form.value.fieldFilter;
-    this.service.filterData(filterF).subscribe(({data, loading}) => {
+    let by: any;
+    console.log(form.value.filterBy);
+    const filterField = new FilterField(form.value.operation, form.value.keyFilter);
+    console.log(filterField.value + ' ' + filterField.operator);
+    switch (form.value.filterBy) {
+      case 'id':
+        by = this.service.filterById(filterField);
+        break;
+      case 'name':
+        by = this.service.filterByName(filterField);
+        break;
+      case 'price':
+        by = this.service.filterByPrice(filterField);
+        break;
+      case 'company':
+        by = this.service.filterByCompany(filterField);
+        break;
+      case 'ram':
+        by = this.service.filterByRam(filterField);
+        break;
+    }
+    by.subscribe(({data, loading}) => {
         // @ts-ignore
         this.laptops = data && data.FilterLaptops;
         this.loading = loading;
@@ -48,9 +70,38 @@ export class HomeComponent implements OnInit {
         console.log(this.laptops);
       },
       error => {
-        this.loading = false;
-        this.error = error;
+      this.message = this.error.message;
+      this.loading = false;
+      this.error = error;
       });
   }
-
+  sortData(form: NgForm): void{
+    console.log();
+    this.service.sortData(form.value.sortBy, form.value.orderBy).subscribe(({data, loading}) => {
+        // @ts-ignore
+        this.laptops = data && data.SortedLaptops;
+        this.loading = loading;
+        // @ts-ignore
+        console.log(this.laptops);
+      },
+      error => {
+      this.message = this.error.message;
+      this.loading = false;
+      this.error = error;
+      });
+  }
+   pageData(form: NgForm): void{
+        this.service.pageData(form.value.page, form.value.sizeData, form.value.sortBy, form.value.orderBy).subscribe(({data, loading}) => {
+        // @ts-ignore
+        this.laptops = data && data.LaptopPagination;
+        this.loading = loading;
+        // @ts-ignore
+        console.log(this.laptops);
+      },
+      error => {
+          this.message = this.error.message;
+          this.loading = false;
+          this.error = error;
+      });
+  }
 }

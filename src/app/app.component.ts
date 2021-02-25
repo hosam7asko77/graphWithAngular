@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from './auth/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'GraphqlWithAngular';
+export class AppComponent implements OnInit{
+    isLoggedIn: boolean;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.authService.isAuthenticated.subscribe(value => {
+      this.isLoggedIn = value;
+    });
+  }
+  ngOnInit(): void {
+    if (!this.isLoggedIn){
+      this.router.navigate(['login']);
+    }
+  }
+
 }

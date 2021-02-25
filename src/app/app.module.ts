@@ -10,14 +10,18 @@ import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home/home.component';
 import {FilterComponent} from './filter/filter.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
+import {AuthComponent} from './auth/auth.component';
+import {CreateComponent} from './create/create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    FilterComponent
+    FilterComponent,
+    CreateComponent,
+    AuthComponent
   ],
   imports: [
     AppRoutingModule,

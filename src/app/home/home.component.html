@@ -1,45 +1,106 @@
-<p>Laptops</p>
-
-  <form #formFilter="ngForm" (ngSubmit)="filterData(formFilter)" class="form-inline">
+<p>Filter</p>
+<form #formFilter="ngForm" (ngSubmit)="filterData(formFilter)" class="form-inline">
   <div class="form-group mx-sm-3 mb-2">
-    <input
-      ngModel="fieldFilter"
-      type="text"
-      class="form-control"
-      id="fieldFilter"
-      name="fieldFilter"
-      placeholder="Enter Field to filter"
-      required
-    />
-    <input
-      ngModel="operation"
-      type="text"
-      class="form-control"
-      name="operation"
-      id="operation"
-      required
-      placeholder="Enter Operation"
-    />
+    <select class="form-control" ngModel #operation name="operation" required="true">
+      <option value="*" disabled>Operation</option>
+      <option value="lt">Less Than</option>
+      <option value="gt">Higher Than</option>
+      <option value="le">Less Or Equal</option>
+      <option value="ge">Higher Or Equal</option>
+      <option value="eq">Equal</option>
+      <option value="neq">Not Equal</option>
+    </select>
+    <select class="form-control" ngModel #filterBy name="filterBy" required>
+      <option value="*">Filter By</option>
+      <option value="id">Id</option>
+      <option value="name">Name</option>
+      <option value="company">Company</option>
+      <option value="price">Price</option>
+      <option value="ram">Ram</option>
+    </select>
     <input
       ngModel
       type="text"
       class="form-control"
-      name="value"
-      ngForm="value"
+      name="keyFilter"
       required
       placeholder="Enter Value"
     />
 
   </div>
-  <button id="filter" name="filter" type="submit" [disabled]="!formFilter.valid" class="btn btn-primary mb-2">
-    Find
+  <button id="filter" name="filter" type="submit" [disabled]="!formFilter.valid || operation.value=='*' || filterBy .value=='*'"  class="btn btn-primary mb-2">
+    Filter <i class="fa fa-filter"></i>
+  </button>
+</form>
+<br>
+<p>Sort</p>
+<form #sortForm="ngForm" (ngSubmit)="sortData(sortForm)" class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="form-control" ngModel name="sortBy" required #sortBy>
+      <option value="*">Sort By</option>
+      <option value="ID">Id</option>
+      <option value="NAME">Name</option>
+      <option value="COMPANY">Company</option>
+      <option value="PRICE">Price</option>
+      <option value="RAM">Ram</option>
+    </select>
+    <select class="form-control" ngModel #orderBy id="orderBy" name="orderBy" required>
+      <option value="*">Order By</option>
+      <option value="ASC">Ascending Order</option>
+      <option value="DESC">Descending Order</option>
+    </select>
+  </div>
+  <button id="pageForm" name="filter" type="submit"
+          [disabled]="!sortForm.valid || orderBy.value=='*' || sortBy.value=='*'" class="btn btn-primary mb-2">
+    Sort <i class="fa fa-sort"></i>
+  </button>
+</form>
+<hr>
+<p>Pagination</p>
+<form #pageForm="ngForm" (ngSubmit)="pageData(pageForm)" class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="form-control" ngModel #sortBy name="sortBy" required>
+      <option value="*">Sort By</option>
+      <option value="ID">Id</option>
+      <option value="NAME">Name</option>
+      <option value="COMPANY">Company</option>
+      <option value="PRICE">Price</option>
+      <option value="RAM">Ram</option>
+    </select>
+    <select class="form-control" ngModel #orderBy name="orderBy" required>
+      <option value="*">Order By</option>
+      <option value="ASC">Ascending Order</option>
+      <option value="DESC">Descending Order</option>
+    </select>
+    <input
+      ngModel
+      type="number"
+      class="form-control"
+      name="page"
+      id="page"
+      required
+      placeholder="Enter Page Start"
+    />
+    <input
+      ngModel
+      type="number"
+      class="form-control"
+      name="sizeData"
+      required
+      placeholder="Enter Size"
+    />
+    <p>{{sortForm.value.sizeData}}</p>
+  </div>
+  <button id="sort" name="filter" type="submit" [disabled]="!pageForm.valid || orderBy.value=='*' || sortBy.value=='*'"
+          class="btn btn-primary mb-2">
+    Load <i class="fa fa-download"></i>
   </button>
 </form>
 <div *ngIf="loading">
   Loading...
 </div>
 <div *ngIf="error">
-  Error Occurred :(
+ {{ message }}
 </div>
 
 <table class="table">
